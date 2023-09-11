@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../common/hooks';
 import GameField from '../../components/GameField/GameField';
 import Button from '../../components/Button/Button';
-import { isCorrectShipCount, randomField } from '../../common/utils';
+import { isCorrectShipCount, randomField } from '../../common/utils/base';
 import { setErrorMes } from '../../store/reducers/appSlice';
 import { clearGameData, setGameData } from '../../store/reducers/gameSlice';
 import {
@@ -12,7 +12,7 @@ import {
 	GameRequestType,
 	IErrorResponse,
 } from '../../services/services.interface';
-import { cookies } from '../../services/cookies';
+import { cookies } from '../../common/utils/cookies';
 
 import styles from './Game.module.scss';
 
@@ -49,6 +49,19 @@ const Game: FC = () => {
 				field: randomField(),
 			},
 		};
+
+		try {
+			let count = 1000000;
+			console.time('rf');
+			while (count > 0) {
+				randomField();
+				count--;
+			}
+			console.timeEnd('rf');
+		} catch (e) {
+			console.error(e);
+		}
+
 		ws?.send(JSON.stringify(request));
 	};
 
