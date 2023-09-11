@@ -1,0 +1,19 @@
+.wrapper,
+.inputs,
+.buttons {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.wrapper {
+	gap: 24px;
+}
+
+.buttons {
+	gap: 16px;
+}
+
+.inputs {
+	gap: 8px;
+}

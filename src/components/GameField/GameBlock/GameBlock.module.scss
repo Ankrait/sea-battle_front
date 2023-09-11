@@ -1,0 +1,59 @@
+.wrapper {
+	position: relative;
+	border: 1px solid #000;
+
+	&.has_hover:hover {
+		background: rgba(0, 0, 0, 0.3);
+	}
+
+	&.ship,
+	&.ship_damage {
+		border: 1px solid #003d60;
+		background: rgba(0, 61, 96, 0.6);
+	}
+}
+
+.miss {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+
+	transform: translate3d(-50%, -50%, 0);
+
+	width: 35%;
+	height: 35%;
+	border-radius: 50%;
+
+	background: #000;
+}
+
+.dead {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+
+	transform: translate3d(-50%, -50%, 0);
+
+	width: 65%;
+	height: 65%;
+
+	&::after,
+	&::before {
+		content: "";
+		position: absolute;
+		left: 50%;
+		top: 50%;
+
+		width: 140%;
+		height: 1px;
+
+		background: #9d1f1f;
+	}
+
+	&::after {
+		transform: translate3d(-50%, -50%, 0) rotate(45deg);
+	}
+	&::before {
+		transform: translate3d(-50%, -50%, 0) rotate(-45deg);
+	}
+}

@@ -1,0 +1,13 @@
+.wrapper,
+.buttons {
+	display: flex;
+	flex-direction: column;
+}
+
+.wrapper {
+	gap: 24px;
+}
+
+.buttons {
+	gap: 16px;
+}

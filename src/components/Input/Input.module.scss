@@ -1,0 +1,51 @@
+.wrapper {
+	width: 100%;
+	margin: 0 0 15px 0;
+	position: relative;
+}
+
+.input {
+	width: 100%;
+	padding: 14px;
+	border-radius: 8px;
+	border: 1px solid #f9e3be;
+	background: rgba(249, 227, 190, 0.2);
+
+	color: #f9e3be;
+	font-size: 20px;
+	font-weight: 500;
+
+	transition: background 0.3s ease;
+
+	&::placeholder {
+		color: transparent;
+	}
+
+	&:focus,
+	&:not(:placeholder-shown),
+	&:-webkit-autofill {
+		background: transparent;
+	}
+
+	& + .placeholder {
+		padding: 0 5px;
+		position: absolute;
+		left: 10px;
+		top: 50%;
+		transform: translateY(-50%);
+		transition: all 0.4s ease;
+		font-size: 20px;
+		color: #f9e3bebe;
+
+		pointer-events: none;
+	}
+
+	&:focus + .placeholder,
+	&:not(:placeholder-shown) + .placeholder,
+	&:-webkit-autofill + .placeholder {
+		font-size: 16px;
+		background: #003d60;
+		transform: translateY(0);
+		top: -8px;
+	}
+}

@@ -1,0 +1,11 @@
+.wrapper {
+	width: 100%;
+	background: #f1ece9;
+	display: grid;
+	grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+	border: 1px solid #000;
+	aspect-ratio: 1/1;
+}
+
+.block {
+}

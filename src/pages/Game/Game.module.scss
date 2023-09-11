@@ -1,0 +1,40 @@
+.wrapper {
+	max-width: 830px;
+	margin: 0 auto;
+	padding: min(85px, max(17vh, 20px)) 15px 30px;
+}
+
+.status {
+	text-align: center;
+	align-self: center;
+	font-size: 24px;
+	margin: 0 0 min(50px, max(10vh, 15px)) 0;
+}
+
+.status_time {
+	margin: 12px 0 0 0;
+	font-size: 36px;
+}
+
+.game_wrapper {
+	display: flex;
+	justify-content: space-between;
+	gap: 24px;
+}
+
+.game_field {
+	flex: 0 1 242px;
+}
+
+.buttons {
+	flex: 0 1 180px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.button_exit {
+	flex: 1 1 auto;
+	display: flex;
+	align-items: flex-end;
+}

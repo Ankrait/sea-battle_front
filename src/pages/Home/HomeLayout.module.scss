@@ -1,0 +1,19 @@
+.wrapper {
+	height: 100%;
+
+	max-width: 420px;
+	margin: 0 auto;
+	padding: min(120px, max(24vh, 20px)) 15px 30px;
+}
+
+.image {
+	margin: 0 auto min(70px, max(10vh, 32px));
+	height: min(122px, max(24vh, 90px));
+	display: flex;
+	justify-content: center;
+
+	img {
+		height: 100%;
+		object-fit: contain;
+	}
+}
