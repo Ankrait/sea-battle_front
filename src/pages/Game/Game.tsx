@@ -20,6 +20,8 @@ import Button from '../../components/Button/Button';
 import styles from './Game.module.scss';
 
 let ws: WebSocket | null = null;
+const WS_URL = 'wss://a1ca-176-52-103-149.ngrok-free.app/';
+// const WS_URL = 'ws://localhost:8080/';
 
 const Game: FC = () => {
 	const {
@@ -92,7 +94,7 @@ const Game: FC = () => {
 			cookies.set('userName', restGame.user);
 		}
 
-		ws = new WebSocket('ws://localhost:8080/');
+		ws = new WebSocket(WS_URL);
 		ws.onmessage = (e: MessageEvent<string>) => {
 			const data = JSON.parse(e.data) as IGameResponse | IErrorResponse;
 			console.log(data);
