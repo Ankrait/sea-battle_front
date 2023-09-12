@@ -6,10 +6,18 @@
 		background: rgba(0, 0, 0, 0.3);
 	}
 
-	&.ship,
-	&.ship_damage {
-		border: 1px solid #003d60;
+	&.ship {
+		// border: 1px solid #003d60;
 		background: rgba(0, 61, 96, 0.6);
+	}
+
+	&.ship_dead_enemy {
+		border: 1px solid #9d1f1f;
+	}
+
+	&.ship_dead,
+	&.ship_dead_enemy {
+		background: rgba(157, 31, 31, 0.6);
 	}
 }
 

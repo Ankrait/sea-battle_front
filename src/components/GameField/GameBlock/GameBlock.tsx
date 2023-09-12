@@ -1,25 +1,28 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
 
-import styles from './GameBlock.module.scss';
+import { IHtmlProps } from '../../../common/interfaces';
 import { FieldType } from '../../../services/services.interface';
 
-interface IGameBlock {
+import styles from './GameBlock.module.scss';
+
+interface IGameBlock extends IHtmlProps {
 	status: FieldType;
 	isEnemy?: boolean;
 }
 
-const GameBlock: FC<IGameBlock> = ({ status, isEnemy }) => {
+const GameBlock: FC<IGameBlock> = ({ status, isEnemy, ...restProps }) => {
 	const className = cn(styles.wrapper, {
-		[styles.ship]: status === 'SHIP' && !isEnemy,
-		[styles.ship_damage]: status === 'DEAD' && !isEnemy,
-		[styles.has_hover]: isEnemy && status !== 'DEAD' && status !== 'MISS',
+		[styles.ship]: (status === 'SHIP' || status === 'DEAD') && !isEnemy,
+		[styles.ship_dead]: status === 'DEAD_SHIP' && !isEnemy,
+		[styles.ship_dead_enemy]: status === 'DEAD_SHIP' && isEnemy,
+		[styles.has_hover]: isEnemy && (status === 'EMPTY' || status === 'SHIP'),
 	});
 
 	return (
-		<div className={className}>
+		<div className={className} {...restProps}>
 			{status === 'MISS' && <div className={styles.miss}></div>}
-			{status === 'DEAD' && <div className={styles.dead}></div>}
+			{status.includes('DEAD') && <div className={styles.dead}></div>}
 		</div>
 	);
 };

@@ -1,8 +1,9 @@
+import { IPosition } from '../common/interfaces';
 import { AppDispatchType, RootStateType } from '../store/createStore';
 
 export type EventType = 'CONNECTION' | 'SCHEME' | 'READY' | 'HIT';
 export type GameStatusType = 'INIT' | 'HIT1' | 'HIT2' | 'END';
-export type FieldType = 'EMPTY' | 'SHIP' | 'DEAD' | 'MISS';
+export type FieldType = 'EMPTY' | 'SHIP' | 'DEAD' | 'DEAD_SHIP' | 'MISS';
 
 export interface IGameResponse {
 	gameId: string;
@@ -23,13 +24,12 @@ export interface IGameResponse {
 
 export interface IGameIdResponse extends Pick<IGameResponse, 'gameId' | 'user'> {}
 
-export class IErrorResponse {
-	message!: string;
+export interface IRandomFieldResponse {
+	field: FieldType[][];
 }
 
-export interface IPosition {
-	x: number;
-	y: number;
+export class IErrorResponse {
+	message!: string;
 }
 
 export interface IBasePayload {

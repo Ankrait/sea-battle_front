@@ -2,9 +2,6 @@ import React, { FC, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from '../../common/hooks';
-import GameField from '../../components/GameField/GameField';
-import Button from '../../components/Button/Button';
-import { isCorrectShipCount, randomField } from '../../common/utils/base';
 import { setErrorMes } from '../../store/reducers/appSlice';
 import { clearGameData, setGameData } from '../../store/reducers/gameSlice';
 import {
@@ -12,7 +9,13 @@ import {
 	GameRequestType,
 	IErrorResponse,
 } from '../../services/services.interface';
+import { gameService } from '../../services/services';
 import { cookies } from '../../common/utils/cookies';
+import { getDeckCount } from '../../common/utils/base';
+import { IPosition } from '../../common/interfaces';
+import GameFieldHead from '../../components/GameFieldHead/GameFieldHead';
+import GameField from '../../components/GameField/GameField';
+import Button from '../../components/Button/Button';
 
 import styles from './Game.module.scss';
 
@@ -38,35 +41,48 @@ const Game: FC = () => {
 	const gameId = restGame.gameId || id || '';
 	const user = restGame.user || cookies.get('userName') || '';
 
-	const setReadyHandler = () => {};
+	const setReadyHandler = () => {
+		const request: GameRequestType = {
+			event: 'READY',
+			payload: {
+				gameId,
+				player: user,
+				isReady: !isReady,
+			},
+		};
 
-	const createFieldHandler = () => {
+		ws?.send(JSON.stringify(request));
+	};
+
+	const createFieldHandler = async () => {
+		const field = await gameService.getRandomField();
 		const request: GameRequestType = {
 			event: 'SCHEME',
 			payload: {
 				gameId,
 				player: user,
-				field: randomField(),
+				field,
 			},
 		};
 
-		try {
-			let count = 1000000;
-			console.time('rf');
-			while (count > 0) {
-				randomField();
-				count--;
-			}
-			console.timeEnd('rf');
-		} catch (e) {
-			console.error(e);
-		}
+		ws?.send(JSON.stringify(request));
+	};
+
+	const onHitHandler = (pos: IPosition) => {
+		const request: GameRequestType = {
+			event: 'HIT',
+			payload: {
+				gameId,
+				player: user,
+				hit: pos,
+			},
+		};
 
 		ws?.send(JSON.stringify(request));
 	};
 
 	useEffect(() => {
-		isCorrectShipCount(userField)
+		getDeckCount(userField) === 20
 			? setReadyButtonDisabled(false)
 			: setReadyButtonDisabled(true);
 	}, [userField]);
@@ -133,13 +149,19 @@ const Game: FC = () => {
 			</div>
 			<div className={styles.game_wrapper}>
 				<div className={styles.game_field}>
-					<div className={styles.game_field_name}></div>
+					<GameFieldHead
+						userName={user}
+						isReady={isReady}
+						className={styles.game_field_name}
+					/>
 					<GameField field={userField} />
 				</div>
 				<div className={styles.buttons}>
 					{status === 'INIT' && (
 						<>
-							<Button onClick={createFieldHandler}>Размещение</Button>
+							<Button disabled={isReady} onClick={createFieldHandler}>
+								Размещение
+							</Button>
 							<Button
 								disabled={isReadyButtonDisabled}
 								onClick={setReadyHandler}
@@ -157,8 +179,17 @@ const Game: FC = () => {
 					</div>
 				</div>
 				<div className={styles.game_field}>
-					<div className={styles.game_field_name}></div>
-					<GameField wrapperClassName={styles.game_field} isEnemy field={enemyField} />
+					<GameFieldHead
+						userName={enemy}
+						isReady={enemyIsReady}
+						className={styles.game_field_name}
+					/>
+					<GameField
+						onHitHandler={onHitHandler}
+						wrapperClassName={styles.game_field}
+						isEnemy
+						field={enemyField}
+					/>
 				</div>
 			</div>
 		</div>
