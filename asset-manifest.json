@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/sea-battle_front/static/css/main.d8d527dc.css",
-    "main.js": "/sea-battle_front/static/js/main.d90d5bb4.js",
+    "main.js": "/sea-battle_front/static/js/main.d90a1aa2.js",
     "static/js/787.5f52ef82.chunk.js": "/sea-battle_front/static/js/787.5f52ef82.chunk.js",
     "static/media/logo.png": "/sea-battle_front/static/media/logo.f3acd497e2d3111dd07a.png",
     "index.html": "/sea-battle_front/index.html",
     "main.d8d527dc.css.map": "/sea-battle_front/static/css/main.d8d527dc.css.map",
-    "main.d90d5bb4.js.map": "/sea-battle_front/static/js/main.d90d5bb4.js.map",
+    "main.d90a1aa2.js.map": "/sea-battle_front/static/js/main.d90a1aa2.js.map",
     "787.5f52ef82.chunk.js.map": "/sea-battle_front/static/js/787.5f52ef82.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d8d527dc.css",
-    "static/js/main.d90d5bb4.js"
+    "static/js/main.d90a1aa2.js"
   ]
 }
