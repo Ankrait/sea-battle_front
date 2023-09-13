@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
 
-import { IHtmlProps } from '../../common/interfaces';
+import { IHtmlProps } from 'common/interfaces';
 
 import styles from './GameFieldHead.module.scss';
 

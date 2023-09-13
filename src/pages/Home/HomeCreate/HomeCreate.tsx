@@ -1,13 +1,13 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import { setErrorMes } from '../../../store/reducers/appSlice';
-import Button from '../../../components/Button/Button';
-import Input from '../../../components/Input/Input';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { setErrorMes } from 'store/reducers/appSlice';
+import Button from 'components/Button/Button';
+import Input from 'components/Input/Input';
 
 import styles from './HomeCreate.module.scss';
-import { createGame } from '../../../store/reducers/gameSlice';
+import { createGame } from 'store/reducers/gameSlice';
 
 const HomeCreate: FC = () => {
 	const loading = useAppSelector((state) => state.app.loading);

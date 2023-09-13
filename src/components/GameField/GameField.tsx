@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
 
-import { FieldType } from '../../services/services.interface';
-import { IPosition } from '../../common/interfaces';
+import { FieldType } from 'services/services.interface';
+import { IPosition } from 'common/interfaces';
 import GameBlock from './GameBlock/GameBlock';
 
 import styles from './GameField.module.scss';

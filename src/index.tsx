@@ -4,8 +4,8 @@ import reportWebVitals from './reportWebVitals';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import { router } from './router/router';
-import { store } from './store/createStore';
+import { router } from 'router/router';
+import { store } from 'store/createStore';
 
 import './index.scss';
 

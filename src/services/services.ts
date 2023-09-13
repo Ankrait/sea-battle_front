@@ -1,13 +1,16 @@
 import axios from 'axios';
-import { IRandomFieldResponse } from './services.interface';
+
 import {
 	IConnectionPayload,
 	ICreatePayload,
 	IGameIdResponse,
+	IRandomFieldResponse,
 } from './services.interface';
 
-// axios.defaults.baseURL = 'http://localhost:8080/';
-axios.defaults.baseURL = 'https://b704-176-52-103-149.ngrok-free.app/';
+axios.defaults.baseURL =
+	window.location.hostname === 'localhost'
+		? 'http://localhost:8080/'
+		: 'https://b704-176-52-103-149.ngrok-free.app/';
 
 // axios.defaults.withCredentials = true;
 // axios.defaults.headers.common['Access-Control-Allow-Headers'] = '*';

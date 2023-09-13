@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import ErrorPopup from './components/ErrorPopup/ErrorPopup';
+import ErrorPopup from 'components/ErrorPopup/ErrorPopup';
 
 import styles from './App.module.scss';
 

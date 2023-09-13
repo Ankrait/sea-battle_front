@@ -1,15 +1,14 @@
 import { createAsyncThunk, createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
-
 import { AxiosError } from 'axios';
 
 import {
 	AsyncThunkConfig,
 	IGameResponse,
 	IGameIdResponse,
-} from '../../services/services.interface';
+} from 'services/services.interface';
+import { ICreatePayload, IConnectionPayload } from 'services/services.interface';
+import { gameService } from 'services/services';
 import { setErrorMes, setLoading } from './appSlice';
-import { ICreatePayload, IConnectionPayload } from '../../services/services.interface';
-import { gameService } from '../../services/services';
 
 interface IGameInitialState extends IGameResponse {}
 

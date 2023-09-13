@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import Button from '../../../components/Button/Button';
+import Button from 'components/Button/Button';
 
 import styles from './HomeMain.module.scss';
-import { useNavigate } from 'react-router-dom';
 
 const HomeMain: FC = () => {
 	const navigate = useNavigate();

@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import logoImg from '../../assets/img/logo.png';
+import logoImg from 'assets/img/logo.png';
+
 import styles from './HomeLayout.module.scss';
 
 const HomeLayout: FC = () => {

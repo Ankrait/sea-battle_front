@@ -1,4 +1,4 @@
-import { FieldType } from '../../services/services.interface';
+import { FieldType } from 'services/services.interface';
 
 export const getDeckCount = (field: FieldType[][]) => {
 	let deckCount = 0;

@@ -1,10 +1,10 @@
 import { createHashRouter } from 'react-router-dom';
-import App from '../App';
-import HomeLayout from '../pages/Home/HomeLayout';
-import HomeMain from '../pages/Home/HomeMain/HomeMain';
-import HomeCreate from '../pages/Home/HomeCreate/HomeCreate';
-import HomeConnect from '../pages/Home/HomeConnect/HomeConnect';
-import Game from '../pages/Game/Game';
+import App from 'App';
+import HomeLayout from 'pages/Home/HomeLayout';
+import HomeMain from 'pages/Home/HomeMain/HomeMain';
+import HomeCreate from 'pages/Home/HomeCreate/HomeCreate';
+import HomeConnect from 'pages/Home/HomeConnect/HomeConnect';
+import Game from 'pages/Game/Game';
 
 export const router = createHashRouter([
 	{

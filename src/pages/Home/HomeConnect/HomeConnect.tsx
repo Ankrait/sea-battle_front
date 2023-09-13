@@ -1,11 +1,11 @@
 import React, { FC, useState, useEffect, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Button from '../../../components/Button/Button';
-import Input from '../../../components/Input/Input';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import { connectGame } from '../../../store/reducers/gameSlice';
-import { setErrorMes } from '../../../store/reducers/appSlice';
+import Button from 'components/Button/Button';
+import Input from 'components/Input/Input';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { connectGame } from 'store/reducers/gameSlice';
+import { setErrorMes } from 'store/reducers/appSlice';
 
 import styles from './HomeConnect.module.scss';
 

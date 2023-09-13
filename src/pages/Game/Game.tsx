@@ -1,27 +1,29 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useAppSelector, useAppDispatch } from '../../common/hooks';
-import { setErrorMes } from '../../store/reducers/appSlice';
-import { clearGameData, setGameData } from '../../store/reducers/gameSlice';
+import { useAppSelector, useAppDispatch } from 'common/hooks';
+import { setErrorMes } from 'store/reducers/appSlice';
+import { clearGameData, setGameData } from 'store/reducers/gameSlice';
 import {
 	IGameResponse,
 	GameRequestType,
 	IErrorResponse,
-} from '../../services/services.interface';
-import { gameService } from '../../services/services';
-import { cookies } from '../../common/utils/cookies';
-import { getDeckCount } from '../../common/utils/base';
-import { IPosition } from '../../common/interfaces';
-import GameFieldHead from '../../components/GameFieldHead/GameFieldHead';
-import GameField from '../../components/GameField/GameField';
-import Button from '../../components/Button/Button';
+} from 'services/services.interface';
+import { gameService } from 'services/services';
+import { cookies } from 'common/utils/cookies';
+import { getDeckCount } from 'common/utils/base';
+import { IPosition } from 'common/interfaces';
+import GameFieldHead from 'components/GameFieldHead/GameFieldHead';
+import GameField from 'components/GameField/GameField';
+import Button from 'components/Button/Button';
 
 import styles from './Game.module.scss';
 
 let ws: WebSocket | null = null;
-const WS_URL = 'wss://b704-176-52-103-149.ngrok-free.app/';
-// const WS_URL = 'ws://localhost:8080/';
+const WS_URL =
+	window.location.hostname === 'localhost'
+		? 'ws://localhost:8080/'
+		: 'wss://b704-176-52-103-149.ngrok-free.app/';
 
 const Game: FC = () => {
 	const {

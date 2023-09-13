@@ -2,8 +2,8 @@ import React, { FC, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import cn from 'classnames';
 
-import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { setErrorMes } from '../../store/reducers/appSlice';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { setErrorMes } from 'store/reducers/appSlice';
 
 import styles from './ErrorPopup.module.scss';
 

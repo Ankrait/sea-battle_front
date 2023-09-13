@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
 
-import { IHtmlProps } from '../../../common/interfaces';
-import { FieldType } from '../../../services/services.interface';
+import { IHtmlProps } from 'common/interfaces';
+import { FieldType } from 'services/services.interface';
 
 import styles from './GameBlock.module.scss';
 

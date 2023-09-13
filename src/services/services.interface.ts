@@ -1,5 +1,5 @@
-import { IPosition } from '../common/interfaces';
-import { AppDispatchType, RootStateType } from '../store/createStore';
+import { IPosition } from 'common/interfaces';
+import { AppDispatchType, RootStateType } from 'store/createStore';
 
 export type EventType = 'CONNECTION' | 'SCHEME' | 'READY' | 'HIT';
 export type GameStatusType = 'INIT' | 'HIT1' | 'HIT2' | 'END';
