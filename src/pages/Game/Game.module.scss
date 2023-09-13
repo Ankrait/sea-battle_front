@@ -16,6 +16,20 @@
 	font-size: 36px;
 }
 
+.status_win,
+.status_lose {
+	font-size: 40px;
+	font-weight: 700;
+}
+
+.status_win {
+	color: #67d056;
+}
+
+.status_lose {
+	color: #9d1f1f;
+}
+
 .game_wrapper {
 	display: flex;
 	justify-content: space-between;

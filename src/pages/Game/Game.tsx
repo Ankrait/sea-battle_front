@@ -145,8 +145,12 @@ const Game: FC = () => {
 						<>Код для входа: {gameId}</>
 					) : status === 'INIT' ? (
 						<>Этап размещения</>
-					) : status === 'END' ? (
-						<>Конец игры</>
+					) : status.includes('WIN') ? (
+						status === `WIN${userNumber}` ? (
+							<div className={styles.status_win}>ПОБЕДА</div>
+						) : (
+							<div className={styles.status_lose}>ПОРАЖЕНИЕ</div>
+						)
 					) : status === `HIT${userNumber}` ? (
 						<>Ваш ход</>
 					) : (
@@ -180,7 +184,9 @@ const Game: FC = () => {
 					)}
 					<div className={styles.button_exit}>
 						{status.includes('HIT') ? (
-							<Button variant="error">Сдаться</Button>
+							<Button onClick={() => navigate('/')} variant="error">
+								Сдаться
+							</Button>
 						) : (
 							<Button onClick={() => navigate('/')}>Выход</Button>
 						)}
