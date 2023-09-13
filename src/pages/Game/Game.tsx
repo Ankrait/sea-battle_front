@@ -20,7 +20,7 @@ import Button from '../../components/Button/Button';
 import styles from './Game.module.scss';
 
 let ws: WebSocket | null = null;
-const WS_URL = 'wss://a1ca-176-52-103-149.ngrok-free.app/';
+const WS_URL = 'wss://b704-176-52-103-149.ngrok-free.app/';
 // const WS_URL = 'ws://localhost:8080/';
 
 const Game: FC = () => {
@@ -93,37 +93,41 @@ const Game: FC = () => {
 		if (restGame.user) {
 			cookies.set('userName', restGame.user);
 		}
+		try {
+			ws = new WebSocket(WS_URL);
 
-		ws = new WebSocket(WS_URL);
-		ws.onmessage = (e: MessageEvent<string>) => {
-			const data = JSON.parse(e.data) as IGameResponse | IErrorResponse;
-			console.log(data);
+			ws.onmessage = (e: MessageEvent<string>) => {
+				const data = JSON.parse(e.data) as IGameResponse | IErrorResponse;
+				console.log(data);
 
-			if ('message' in data) {
-				dispatch(setErrorMes(data.message));
-				return;
-			}
+				if ('message' in data) {
+					dispatch(setErrorMes(data.message));
+					return;
+				}
 
-			dispatch(setGameData(data));
-		};
-
-		ws.onopen = () => {
-			console.log('ws open');
-
-			const request: GameRequestType = {
-				event: 'CONNECTION',
-				payload: {
-					gameId,
-					player: user,
-				},
+				dispatch(setGameData(data));
 			};
 
-			ws?.send(JSON.stringify(request));
-		};
+			ws.onopen = () => {
+				console.log('ws open');
 
-		ws.onclose = () => {
-			console.log('ws close');
-		};
+				const request: GameRequestType = {
+					event: 'CONNECTION',
+					payload: {
+						gameId,
+						player: user,
+					},
+				};
+
+				ws?.send(JSON.stringify(request));
+			};
+
+			ws.onclose = () => {
+				console.log('ws close');
+			};
+		} catch (e) {
+			console.log(e);
+		}
 
 		return () => {
 			ws?.close();

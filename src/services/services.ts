@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FieldType, IRandomFieldResponse } from './services.interface';
+import { IRandomFieldResponse } from './services.interface';
 import {
 	IConnectionPayload,
 	ICreatePayload,
@@ -7,11 +7,13 @@ import {
 } from './services.interface';
 
 // axios.defaults.baseURL = 'http://localhost:8080/';
-axios.defaults.baseURL = 'https://a1ca-176-52-103-149.ngrok-free.app/';
+axios.defaults.baseURL = 'https://b704-176-52-103-149.ngrok-free.app/';
 
-axios.defaults.headers['Access-Control-Allow-Origin'] = '*';
-axios.defaults.withCredentials = true;
-// axios.defaults.headers.post['Acc'] = true;
+// axios.defaults.withCredentials = true;
+// axios.defaults.headers.common['Access-Control-Allow-Headers'] = '*';
+// axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+// axios.defaults.headers.common['Cache-Control'] = 'no-store,no-cache,must-revalidate';
+// axios.defaults.headers.common['Vary'] = 'Origin';
 
 export const gameService = {
 	createGame: async (data: ICreatePayload) => {
