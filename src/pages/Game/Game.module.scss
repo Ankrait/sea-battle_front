@@ -27,7 +27,7 @@
 }
 
 .status_lose {
-	color: #9d1f1f;
+	color: #d64444;
 }
 
 .game_wrapper {
@@ -49,6 +49,8 @@
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
+
+	padding: 34px 0 0 0;
 }
 
 .button_exit {

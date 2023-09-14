@@ -18,7 +18,8 @@ const Button: FC<IButton> = ({
 	const buttonClassName = cn(
 		styles.button,
 		className,
-		disabled || {
+		disabled || 
+		{
 			[styles.default]: variant === 'default' || !variant,
 			[styles.success]: variant === 'success',
 			[styles.error]: variant === 'error',

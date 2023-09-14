@@ -18,6 +18,7 @@ import GameField from 'components/GameField/GameField';
 import Button from 'components/Button/Button';
 
 import styles from './Game.module.scss';
+import Surrender from 'components/Surrender/Surrender';
 
 let ws: WebSocket | null = null;
 const WS_URL =
@@ -79,6 +80,18 @@ const Game: FC = () => {
 				gameId,
 				player: user,
 				hit: pos,
+			},
+		};
+
+		ws?.send(JSON.stringify(request));
+	};
+
+	const surrenderHandler = () => {
+		const request: GameRequestType = {
+			event: 'SURRENDER',
+			payload: {
+				gameId,
+				player: user,
 			},
 		};
 
@@ -157,7 +170,7 @@ const Game: FC = () => {
 						<>Ход соперника</>
 					)}
 				</div>
-				<div className={styles.status_time}>0:00</div>
+				{/* <div className={styles.status_time}>0:00</div> */}
 			</div>
 			<div className={styles.game_wrapper}>
 				<div className={styles.game_field}>
@@ -184,9 +197,7 @@ const Game: FC = () => {
 					)}
 					<div className={styles.button_exit}>
 						{status.includes('HIT') ? (
-							<Button onClick={() => navigate('/')} variant="error">
-								Сдаться
-							</Button>
+							<Surrender onSurrenderHandler={surrenderHandler} />
 						) : (
 							<Button onClick={() => navigate('/')}>Выход</Button>
 						)}

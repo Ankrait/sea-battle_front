@@ -16,7 +16,7 @@
 
 	width: 100%;
 	border-radius: 8px;
-	padding: 14px;
+	padding: 10px;
 	border: 1px solid transparent;
 
 	transition: background 0.3s ease-out, border 0.3s ease-out, color 0.3s ease-out;
@@ -30,7 +30,7 @@
 	}
 
 	&.error {
-		@include buttonColors(#9d1f1f);
+		@include buttonColors(#D64444);
 	}
 
 	&:disabled {

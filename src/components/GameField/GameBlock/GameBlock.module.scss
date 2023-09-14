@@ -2,17 +2,18 @@
 	position: relative;
 	border: 1px solid #000;
 
+	transition: all 0.2s ease;
+
 	&.has_hover:hover {
 		background: rgba(0, 0, 0, 0.3);
 	}
 
 	&.ship {
-		// border: 1px solid #003d60;
 		background: rgba(0, 61, 96, 0.6);
 	}
 
 	&.ship_dead_enemy {
-		border: 1px solid #9d1f1f;
+		border: 1px solid #d64444;
 	}
 
 	&.ship_dead,
@@ -55,7 +56,7 @@
 		width: 140%;
 		height: 1px;
 
-		background: #9d1f1f;
+		background: #d64444;
 	}
 
 	&::after {
@@ -63,5 +64,115 @@
 	}
 	&::before {
 		transform: translate3d(-50%, -50%, 0) rotate(-45deg);
+	}
+}
+
+.anim {
+	transition: all 0.5s 1.5s ease;
+
+	&:not(.anim_dead) {
+		.miss,
+		.dead {
+			opacity: 0;
+			animation: appearance 0.5s 1.7s ease-in-out forwards;
+		}
+	}
+}
+
+.animation {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate3d(-50%, -50%, 0);
+}
+
+.bomb_image {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+
+	opacity: 0;
+	width: 60px;
+	height: 60px;
+	transform: translate3d(140%, -240%, 0) rotate(45deg);
+
+	animation: bomb 1.5s ease-in forwards;
+
+	img {
+		width: 100%;
+		object-fit: contain;
+	}
+}
+
+.explosion_image {
+	position: absolute;
+
+	width: 24px;
+	height: 0;
+
+	overflow: hidden;
+
+	bottom: 0;
+	left: 50%;
+	transform: translate3d(-50%, 50%, 0);
+
+	animation: explosion 1.3s 1.5s ease-in forwards;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	img {
+		width: 100%;
+		object-fit: contain;
+	}
+}
+
+@keyframes appearance {
+	0% {
+		opacity: 0;
+		max-height: 0;
+	}
+
+	100% {
+		opacity: 1;
+		max-height: 100%;
+	}
+}
+
+@keyframes bomb {
+	0% {
+		opacity: 0;
+	}
+
+	10% {
+		opacity: 1;
+	}
+
+	90% {
+		width: 10px;
+		height: 10px;
+		transform: translate3d(0%, -100%, 0) rotate(-25deg);
+	}
+
+	100% {
+		opacity: 1;
+		width: 0px;
+		height: 0px;
+		transform: translate3d(0%, -100%, 0) rotate(-25deg);
+	}
+}
+
+@keyframes explosion {
+	0% {
+		height: 0;
+	}
+	80% {
+		height: 40px;
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+		height: 40px;
 	}
 }

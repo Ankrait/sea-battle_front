@@ -1,7 +1,7 @@
 import { IPosition } from 'common/interfaces';
 import { AppDispatchType, RootStateType } from 'store/createStore';
 
-export type EventType = 'CONNECTION' | 'SCHEME' | 'READY' | 'HIT';
+export type EventType = 'CONNECTION' | 'SCHEME' | 'READY' | 'HIT' | 'SURRENDER';
 export type GameStatusType = 'INIT' | 'HIT1' | 'HIT2' | 'WIN1' | 'WIN2';
 export type FieldType = 'EMPTY' | 'SHIP' | 'DEAD' | 'DEAD_SHIP' | 'MISS';
 
@@ -61,6 +61,7 @@ export interface IHitPayload extends IBasePayload {
 }
 
 export type GameRequestType =
+	| IBaseRequest<'SURRENDER', IBasePayload>
 	| IBaseRequest<'CONNECTION', IConnectionPayload>
 	| IBaseRequest<'SCHEME', ISchemePayload>
 	| IBaseRequest<'READY', IReadyPayload>
