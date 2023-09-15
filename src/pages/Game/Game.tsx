@@ -1,14 +1,14 @@
-import React, { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from 'common/hooks';
-import { setErrorMes } from 'store/reducers/appSlice';
-import { clearGameData, setGameData } from 'store/reducers/gameSlice';
 import {
-	IGameResponse,
-	GameRequestType,
-	IErrorResponse,
-} from 'services/services.interface';
+	clearGameData,
+	sendMessage,
+	socketConnect,
+	socketDisconnect,
+} from 'store/reducers/gameSlice';
+import { GameRequestType } from 'services/services.interface';
 import { gameService } from 'services/services';
 import { cookies } from 'common/utils/cookies';
 import { getDeckCount } from 'common/utils/base';
@@ -16,15 +16,10 @@ import { IPosition } from 'common/interfaces';
 import GameFieldHead from 'components/GameFieldHead/GameFieldHead';
 import GameField from 'components/GameField/GameField';
 import Button from 'components/Button/Button';
+import Surrender from 'components/Surrender/Surrender';
+import GameStatus from 'components/GameStatus/GameStatus';
 
 import styles from './Game.module.scss';
-import Surrender from 'components/Surrender/Surrender';
-
-let ws: WebSocket | null = null;
-const WS_URL =
-	window.location.hostname === 'localhost'
-		? 'ws://localhost:8080/'
-		: 'wss://b704-176-52-103-149.ngrok-free.app/';
 
 const Game: FC = () => {
 	const {
@@ -56,7 +51,7 @@ const Game: FC = () => {
 			},
 		};
 
-		ws?.send(JSON.stringify(request));
+		dispatch(sendMessage(request));
 	};
 
 	const createFieldHandler = async () => {
@@ -70,7 +65,7 @@ const Game: FC = () => {
 			},
 		};
 
-		ws?.send(JSON.stringify(request));
+		dispatch(sendMessage(request));
 	};
 
 	const onHitHandler = (pos: IPosition) => {
@@ -83,7 +78,7 @@ const Game: FC = () => {
 			},
 		};
 
-		ws?.send(JSON.stringify(request));
+		dispatch(sendMessage(request));
 	};
 
 	const surrenderHandler = () => {
@@ -95,7 +90,7 @@ const Game: FC = () => {
 			},
 		};
 
-		ws?.send(JSON.stringify(request));
+		dispatch(sendMessage(request));
 	};
 
 	useEffect(() => {
@@ -105,73 +100,19 @@ const Game: FC = () => {
 	}, [userField]);
 
 	useEffect(() => {
-		if (restGame.user) {
-			cookies.set('userName', restGame.user);
-		}
-		try {
-			ws = new WebSocket(WS_URL);
+		cookies.set('userName', user);
 
-			ws.onmessage = (e: MessageEvent<string>) => {
-				const data = JSON.parse(e.data) as IGameResponse | IErrorResponse;
-				console.log(data);
-
-				if ('message' in data) {
-					dispatch(setErrorMes(data.message));
-					return;
-				}
-
-				dispatch(setGameData(data));
-			};
-
-			ws.onopen = () => {
-				console.log('ws open');
-
-				const request: GameRequestType = {
-					event: 'CONNECTION',
-					payload: {
-						gameId,
-						player: user,
-					},
-				};
-
-				ws?.send(JSON.stringify(request));
-			};
-
-			ws.onclose = () => {
-				console.log('ws close');
-			};
-		} catch (e) {
-			console.log(e);
-		}
+		dispatch(socketConnect({ gameId, player: user }));
 
 		return () => {
-			ws?.close();
+			dispatch(socketDisconnect());
 			dispatch(clearGameData());
 		};
-	}, [dispatch, gameId, user]);
+	}, []);
 
 	return (
 		<div className={styles.wrapper}>
-			<div className={styles.status}>
-				<div className={styles.status_info}>
-					{!enemy ? (
-						<>Код для входа: {gameId}</>
-					) : status === 'INIT' ? (
-						<>Этап размещения</>
-					) : status.includes('WIN') ? (
-						status === `WIN${userNumber}` ? (
-							<div className={styles.status_win}>ПОБЕДА</div>
-						) : (
-							<div className={styles.status_lose}>ПОРАЖЕНИЕ</div>
-						)
-					) : status === `HIT${userNumber}` ? (
-						<>Ваш ход</>
-					) : (
-						<>Ход соперника</>
-					)}
-				</div>
-				{/* <div className={styles.status_time}>0:00</div> */}
-			</div>
+			<GameStatus className={styles.status} />
 			<div className={styles.game_wrapper}>
 				<div className={styles.game_field}>
 					<GameFieldHead

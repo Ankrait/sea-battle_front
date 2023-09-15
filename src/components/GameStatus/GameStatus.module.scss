@@ -1,0 +1,24 @@
+.status {
+	text-align: center;
+	align-self: center;
+	font-size: 24px;
+}
+
+.status_time {
+	margin: 12px 0 0 0;
+	font-size: 36px;
+}
+
+.status_win,
+.status_lose {
+	font-size: 40px;
+	font-weight: 700;
+}
+
+.status_win {
+	color: #67d056;
+}
+
+.status_lose {
+	color: #d64444;
+}

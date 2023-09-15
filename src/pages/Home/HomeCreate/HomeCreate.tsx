@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { setErrorMes } from 'store/reducers/appSlice';
+import { createGame } from 'store/reducers/gameSlice';
+import { cookies } from 'common/utils/cookies';
 import Button from 'components/Button/Button';
 import Input from 'components/Input/Input';
 
 import styles from './HomeCreate.module.scss';
-import { createGame } from 'store/reducers/gameSlice';
 
 const HomeCreate: FC = () => {
 	const loading = useAppSelector((state) => state.app.loading);
@@ -28,6 +29,10 @@ const HomeCreate: FC = () => {
 	useEffect(() => {
 		if (gameId) navigate(`/game/${gameId}`);
 	}, [gameId]);
+
+	useEffect(() => {
+		setName(cookies.get('userName') || '');
+	}, []);
 
 	return (
 		<div className={styles.wrapper}>

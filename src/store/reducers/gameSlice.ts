@@ -5,9 +5,13 @@ import {
 	AsyncThunkConfig,
 	IGameResponse,
 	IGameIdResponse,
+	GameRequestType,
+	IBasePayload,
+	IErrorResponse,
 } from 'services/services.interface';
 import { ICreatePayload, IConnectionPayload } from 'services/services.interface';
 import { gameService } from 'services/services';
+import { socket } from 'services/ws';
 import { setErrorMes, setLoading } from './appSlice';
 
 interface IGameInitialState extends IGameResponse {}
@@ -88,3 +92,63 @@ export const connectGame = createAsyncThunk<
 		dispatch(setLoading(false));
 	}
 });
+
+export const socketConnect = createAsyncThunk<void, IBasePayload, AsyncThunkConfig>(
+	'game/socketConnect',
+	(payload, { dispatch, rejectWithValue }) => {
+		try {
+			socket.connect();
+
+			socket.on('connect', () => {
+				console.log('ws open');
+
+				const request: GameRequestType = {
+					event: 'CONNECTION',
+					payload,
+				};
+
+				socket.emit('message', request);
+			});
+
+			socket.on('close', () => {
+				console.log('ws close');
+			});
+
+			socket.on('message', (data) => {
+				const response = data as IGameResponse | IErrorResponse;
+				console.log(response);
+
+				if ('message' in response) {
+					dispatch(setErrorMes(response.message));
+					return;
+				}
+
+				dispatch(setGameData(response));
+			});
+		} catch {
+			return rejectWithValue('[socketConnect]: Error');
+		}
+	}
+);
+
+export const sendMessage = createAsyncThunk<void, GameRequestType, AsyncThunkConfig>(
+	'game/sendMessage',
+	(request, { rejectWithValue }) => {
+		try {
+			socket.emit('message', request);
+		} catch {
+			return rejectWithValue('[sendMessage]: Error');
+		}
+	}
+);
+
+export const socketDisconnect = createAsyncThunk<void, void, AsyncThunkConfig>(
+	'game/socketDisconnect',
+	(_, { rejectWithValue }) => {
+		try {
+			socket.disconnect();
+		} catch {
+			return rejectWithValue('[socketDisconnect]: Error');
+		}
+	}
+);

@@ -1,11 +1,12 @@
 import React, { FC, useState, useEffect, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Button from 'components/Button/Button';
-import Input from 'components/Input/Input';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { connectGame } from 'store/reducers/gameSlice';
 import { setErrorMes } from 'store/reducers/appSlice';
+import { cookies } from '../../../common/utils/cookies';
+import Button from 'components/Button/Button';
+import Input from 'components/Input/Input';
 
 import styles from './HomeConnect.module.scss';
 
@@ -46,6 +47,10 @@ const HomeConnect: FC = () => {
 	useEffect(() => {
 		if (gameId) navigate(`/game/${gameId}`);
 	}, [gameId, navigate]);
+
+	useEffect(() => {
+		setName(cookies.get('userName') || '');
+	}, []);
 
 	return (
 		<div className={styles.wrapper}>
