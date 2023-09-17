@@ -10,7 +10,7 @@ import {
 export const URL =
 	window.location.hostname === 'localhost'
 		? 'http://localhost:8080'
-		: 'https://064e-176-52-103-149.ngrok-free.app/';
+		: 'https://sea-battle-back.onrender.com/';
 
 axios.defaults.baseURL = URL;
 // axios.defaults.withCredentials = true;
