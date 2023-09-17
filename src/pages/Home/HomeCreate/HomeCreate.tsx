@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'common/hooks';
@@ -26,6 +26,13 @@ const HomeCreate: FC = () => {
 		dispatch(createGame({ player: name }));
 	};
 
+	const nameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+		const value = e.currentTarget.value;
+		if (value.length > 10) return;
+
+		setName(value);
+	};
+
 	useEffect(() => {
 		if (gameId) navigate(`/game/${gameId}`);
 	}, [gameId]);
@@ -37,11 +44,7 @@ const HomeCreate: FC = () => {
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.inputs}>
-				<Input
-					onChange={(e) => setName(e.currentTarget.value)}
-					placeholder="Имя"
-					value={name}
-				/>
+				<Input onChange={nameChangeHandler} placeholder="Имя" value={name} />
 			</div>
 			<div className={styles.buttons}>
 				<Button disabled={loading} onClick={createGameHandler} variant="success">

@@ -99,7 +99,7 @@ export const socketConnect = createAsyncThunk<void, IBasePayload, AsyncThunkConf
 		try {
 			socket.connect();
 
-			socket.on('connect', () => {
+			const onConnect = () => {
 				console.log('ws open');
 
 				const request: GameRequestType = {
@@ -108,14 +108,8 @@ export const socketConnect = createAsyncThunk<void, IBasePayload, AsyncThunkConf
 				};
 
 				socket.emit('message', request);
-			});
-
-			socket.on('close', () => {
-				console.log('ws close');
-			});
-
-			socket.on('message', (data) => {
-				const response = data as IGameResponse | IErrorResponse;
+			};
+			const onMessage = (response: IGameResponse | IErrorResponse) => {
 				console.log(response);
 
 				if ('message' in response) {
@@ -124,7 +118,20 @@ export const socketConnect = createAsyncThunk<void, IBasePayload, AsyncThunkConf
 				}
 
 				dispatch(setGameData(response));
-			});
+			};
+			const onDisconnect = () => {
+				console.log('ws close');
+
+				if (!socket.active) {
+					socket.off('connect', onConnect);
+					socket.off('message', onMessage);
+					socket.off('disconnect', onDisconnect);
+				}
+			};
+
+			socket.on('connect', onConnect);
+			socket.on('message', onMessage);
+			socket.on('disconnect', onDisconnect);
 		} catch {
 			return rejectWithValue('[socketConnect]: Error');
 		}

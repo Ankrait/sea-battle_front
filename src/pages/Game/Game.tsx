@@ -1,5 +1,5 @@
-import { FC, useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { FC, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from 'common/hooks';
 import {
@@ -9,64 +9,30 @@ import {
 	socketDisconnect,
 } from 'store/reducers/gameSlice';
 import { GameRequestType } from 'services/services.interface';
-import { gameService } from 'services/services';
 import { cookies } from 'common/utils/cookies';
-import { getDeckCount } from 'common/utils/base';
 import { IPosition } from 'common/interfaces';
 import GameFieldHead from 'components/GameFieldHead/GameFieldHead';
 import GameField from 'components/GameField/GameField';
-import Button from 'components/Button/Button';
-import Surrender from 'components/Surrender/Surrender';
 import GameStatus from 'components/GameStatus/GameStatus';
 
 import styles from './Game.module.scss';
+import GameButtons from 'components/GameButtons/GameButtons';
 
 const Game: FC = () => {
 	const {
-		userNumber,
 		userField,
-		isReady,
-		enemy,
 		enemyField,
+		enemy,
+		isReady,
 		enemyIsReady,
-		status,
-		...restGame
+		gameId: stateGameId,
+		user: stateUser,
 	} = useAppSelector((state) => state.game);
 	const { id } = useParams();
-	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
-	const [isReadyButtonDisabled, setReadyButtonDisabled] = useState(true);
-
-	const gameId = restGame.gameId || id || '';
-	const user = restGame.user || cookies.get('userName') || '';
-
-	const setReadyHandler = () => {
-		const request: GameRequestType = {
-			event: 'READY',
-			payload: {
-				gameId,
-				player: user,
-				isReady: !isReady,
-			},
-		};
-
-		dispatch(sendMessage(request));
-	};
-
-	const createFieldHandler = async () => {
-		const field = await gameService.getRandomField();
-		const request: GameRequestType = {
-			event: 'SCHEME',
-			payload: {
-				gameId,
-				player: user,
-				field,
-			},
-		};
-
-		dispatch(sendMessage(request));
-	};
+	const gameId = id || stateGameId || '';
+	const user = stateUser || cookies.get('userName') || '';
 
 	const onHitHandler = (pos: IPosition) => {
 		const request: GameRequestType = {
@@ -81,24 +47,6 @@ const Game: FC = () => {
 		dispatch(sendMessage(request));
 	};
 
-	const surrenderHandler = () => {
-		const request: GameRequestType = {
-			event: 'SURRENDER',
-			payload: {
-				gameId,
-				player: user,
-			},
-		};
-
-		dispatch(sendMessage(request));
-	};
-
-	useEffect(() => {
-		getDeckCount(userField) === 20
-			? setReadyButtonDisabled(false)
-			: setReadyButtonDisabled(true);
-	}, [userField]);
-
 	useEffect(() => {
 		cookies.set('userName', user);
 
@@ -108,7 +56,7 @@ const Game: FC = () => {
 			dispatch(socketDisconnect());
 			dispatch(clearGameData());
 		};
-	}, []);
+	}, [dispatch, gameId, user]);
 
 	return (
 		<div className={styles.wrapper}>
@@ -122,28 +70,7 @@ const Game: FC = () => {
 					/>
 					<GameField field={userField} />
 				</div>
-				<div className={styles.buttons}>
-					{status === 'INIT' && (
-						<>
-							<Button disabled={isReady} onClick={createFieldHandler}>
-								Размещение
-							</Button>
-							<Button
-								disabled={isReadyButtonDisabled}
-								onClick={setReadyHandler}
-								variant={isReady ? 'error' : 'success'}>
-								{isReady ? <>Не готов</> : <>Готов</>}
-							</Button>
-						</>
-					)}
-					<div className={styles.button_exit}>
-						{status.includes('HIT') ? (
-							<Surrender onSurrenderHandler={surrenderHandler} />
-						) : (
-							<Button onClick={() => navigate('/')}>Выход</Button>
-						)}
-					</div>
-				</div>
+				<GameButtons className={styles.buttons} />
 				<div className={styles.game_field}>
 					<GameFieldHead
 						userName={enemy}

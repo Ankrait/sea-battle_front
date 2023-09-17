@@ -94,7 +94,7 @@
 	opacity: 0;
 	width: 60px;
 	height: 60px;
-	transform: translate3d(140%, -240%, 0) rotate(45deg);
+	transform: translate(140%, -240%) rotate(45deg);
 
 	animation: bomb 1.5s ease-in forwards;
 
@@ -152,14 +152,14 @@
 	90% {
 		width: 10px;
 		height: 10px;
-		transform: translate3d(0%, -100%, 0) rotate(-25deg);
+		transform: translate(0%, -100%) rotate(-25deg);
 	}
 
 	100% {
 		opacity: 1;
 		width: 0px;
 		height: 0px;
-		transform: translate3d(0%, -100%, 0) rotate(-25deg);
+		transform: translate(0%, -100%) rotate(-25deg);
 	}
 }
 

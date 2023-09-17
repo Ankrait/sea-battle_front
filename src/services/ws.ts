@@ -1,10 +1,11 @@
 import { io } from 'socket.io-client';
+import { URL } from './services';
 
-const WS_URL =
-	window.location.hostname === 'localhost'
-		? 'http://localhost:8080'
-		: 'wss://b704-176-52-103-149.ngrok-free.app/';
-
-export const socket = io(WS_URL, {
+export const socket = io(URL, {
 	autoConnect: false,
+	reconnectionDelay: 500,
+	reconnectionDelayMax: 1500,
+	extraHeaders: {
+		'ngrok-skip-browser-warning': 'true',
+	},
 });

@@ -1,4 +1,44 @@
 .wrapper {
 	font-size: 18px;
 	font-weight: 700;
+
+	&.waiting {
+		animation: waiting 4s ease-in-out infinite;
+	}
+}
+
+.ready,
+.not_ready {
+	font-weight: 500;
+	font-size: 16px;
+}
+
+.ready {
+	color: #67d056;
+}
+
+.not_ready {
+	color: #d64444;
+}
+
+@keyframes waiting {
+	0% {
+		opacity: 1;
+	}
+
+	20% {
+		opacity: 0;
+	}
+
+	40% {
+		opacity: 1;
+	}
+
+	60% {
+		opacity: 0;
+	}
+
+	80% {
+		opacity: 1;
+	}
 }

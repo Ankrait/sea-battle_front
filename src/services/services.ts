@@ -7,13 +7,14 @@ import {
 	IRandomFieldResponse,
 } from './services.interface';
 
-axios.defaults.baseURL =
+export const URL =
 	window.location.hostname === 'localhost'
-		? 'http://localhost:8080/'
-		: 'https://b704-176-52-103-149.ngrok-free.app/';
+		? 'http://localhost:8080'
+		: 'https://064e-176-52-103-149.ngrok-free.app/';
 
+axios.defaults.baseURL = URL;
 // axios.defaults.withCredentials = true;
-// axios.defaults.headers.common['Access-Control-Allow-Headers'] = '*';
+axios.defaults.headers.common['ngrok-skip-browser-warning'] = 'true';
 // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 // axios.defaults.headers.common['Cache-Control'] = 'no-store,no-cache,must-revalidate';
 // axios.defaults.headers.common['Vary'] = 'Origin';

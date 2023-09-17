@@ -16,14 +16,25 @@ const GameFieldHead: FC<IGameFieldHead> = ({
 	className,
 	...restProps
 }) => {
+	const wrapperClassName = cn(styles.wrapper, className, {
+		[styles.waiting]: !userName,
+	});
+
 	return (
-		<div className={cn(styles.wrapper, className)} {...restProps}>
+		<div className={wrapperClassName} {...restProps}>
 			{userName ? (
 				<>
-					{userName} - <span>{isReady ? <>Готов</> : <>Не готов</>}</span>
+					{userName} -{' '}
+					{isReady ? (
+						<span className={styles.ready}>Готов</span>
+					) : (
+						<span className={styles.not_ready}>Не готов</span>
+					)}
 				</>
 			) : (
-				<>Ожидание...</>
+				<>
+					Ожидание<span className={styles.dots}>...</span>
+				</>
 			)}
 		</div>
 	);

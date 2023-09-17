@@ -23,16 +23,5 @@
 }
 
 .buttons {
-	flex: 0 1 180px;
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-
 	padding: 34px 0 0 0;
-}
-
-.button_exit {
-	flex: 1 1 auto;
-	display: flex;
-	align-items: flex-end;
 }
